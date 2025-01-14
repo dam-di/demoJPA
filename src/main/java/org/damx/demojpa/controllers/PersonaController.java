@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/personas")
@@ -23,13 +24,24 @@ public class PersonaController {
     }
 
     @PostMapping("/crearPasaporte")
-    public ResponseEntity<Pasaporte> crearPasaporte(@RequestBody Pasaporte pasaporte) {
-        return ResponseEntity.ok(personaService.savePassport(pasaporte));
+    public ResponseEntity<String> crearPasaporte(@RequestBody Pasaporte pasaporte) {
+        if(personaService.savePassport(pasaporte)){
+            return ResponseEntity.ok("Pasaporte creado");
+        }
+        return ResponseEntity.ok("El pasaporte ya existe");
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<Persona> crearPersona(@RequestBody Persona persona) {
-        return ResponseEntity.ok(personaService.save(persona));
+    public ResponseEntity<String> crearPersona(@RequestBody Persona persona) {
+        try {
+            Optional<Persona> p = personaService.save(persona);
+            if(p.isPresent()) {
+                return ResponseEntity.ok("Persona agregada");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok("No se pudo crer la persona");
     }
 
     @GetMapping("/nombre/{nombre}") // END POINT NOMBRE EXACTO

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonaService {
@@ -18,22 +19,33 @@ public class PersonaService {
     @Autowired
     private PasaporteRepository pasaporteRepository;
 
-    public Pasaporte savePassport(Pasaporte pasaporte) {
-        return pasaporteRepository.save(pasaporte);
+    public boolean savePassport(Pasaporte pasaporte) {
+        try{
+            pasaporteRepository.save(pasaporte);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
     }
 
     public void delete(Long id) {
         personaRepository.deleteById(id);
     }
 
-    public Persona save(Persona persona) {
+    public Optional<Persona> save(Persona persona) {
         if (persona.getPasaporte() != null) {
             persona.getPasaporte().setPersona(persona);
         }
         if (persona.getTelefono() != null) {
             persona.getTelefono().setPersona(persona);
         }
-        return personaRepository.save(persona);
+        try{
+            Optional<Persona> p = Optional.of(personaRepository.save(persona));
+            return p;
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public Persona findByNombre(String nombre) {

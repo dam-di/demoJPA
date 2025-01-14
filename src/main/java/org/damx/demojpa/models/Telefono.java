@@ -1,6 +1,7 @@
 package org.damx.demojpa.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -19,7 +20,7 @@ public class Telefono {
     @Column(name = "tipo", length = 20)
     private String tipo;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//Se ignora al serializar (enviar)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "persona_id")
     private Persona persona;
