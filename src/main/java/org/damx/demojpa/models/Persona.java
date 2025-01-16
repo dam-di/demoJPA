@@ -3,6 +3,10 @@ package org.damx.demojpa.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "personas", schema = "public")
@@ -22,6 +26,34 @@ public class Persona {
 
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Telefono telefono;
+
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private List<Actividad> actividades = new ArrayList<>();
+
+
+
+
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private List<Gasto> gastos = new ArrayList<>();
+
+    public List<Gasto> getGastos() {
+        return gastos;
+    }
+
+    public void setGastos(List<Gasto> gastos) {
+        this.gastos = gastos;
+    }
+
+
+
+
+    public List<Actividad> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<Actividad> actividades) {
+        this.actividades = actividades;
+    }
 
     public Telefono getTelefono() {
         return telefono;

@@ -17,6 +17,7 @@ public class PersonaController {
     @Autowired
     private PersonaService personaService;
 
+
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> borrar(@PathVariable Long id) {
         personaService.delete(id);
