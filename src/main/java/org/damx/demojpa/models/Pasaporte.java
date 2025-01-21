@@ -1,5 +1,6 @@
 package org.damx.demojpa.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ public class Pasaporte {
     @Column(name = "numero", nullable = false, length = 20)
     private String numero;
 
-    @Column(name = "fecha_emision", nullable = false)
+    @Column(name = "fecha_emision")
     private LocalDate fechaEmision;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//Se ignora al serializar (enviar)

@@ -2,6 +2,7 @@ package org.damx.demojpa.controllers;
 
 import org.damx.demojpa.models.Pasaporte;
 import org.damx.demojpa.models.Persona;
+import org.damx.demojpa.models.ResponseModel;
 import org.damx.demojpa.services.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +34,23 @@ public class PersonaController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<String> crearPersona(@RequestBody Persona persona) {
+    public ResponseEntity<ResponseModel> crearPersona(@RequestBody Persona persona) {
+        ResponseModel response = new ResponseModel();
         try {
             Optional<Persona> p = personaService.save(persona);
             if(p.isPresent()) {
-                return ResponseEntity.ok("Persona agregada");
+                response.setSuccess(0);
+                response.setMessage("Persona creada con exito");
+                response.setData(persona.getId());
+                return ResponseEntity.ok(response);
             }
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok("No se pudo crer la persona");
+        response.setSuccess(1); // 1 quiere decir que falló
+        response.setMessage("Error al crear la persona");
+        response.setData(null);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/nombre/{nombre}") // END POINT NOMBRE EXACTO

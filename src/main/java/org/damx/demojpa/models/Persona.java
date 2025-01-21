@@ -1,5 +1,6 @@
 package org.damx.demojpa.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,8 +17,10 @@ public class Persona {
     private int id;
     @Column(name = "nombre", nullable = false, length = 50, unique = false)
     private String nombre;
+
     @Column(name = "fecha_nacimiento", nullable = true, unique = false)
     private LocalDate fechaNacimiento;
+
     @Column(name = "email", length = 100, unique = true)
     private String correo;
 
