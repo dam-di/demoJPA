@@ -1,8 +1,10 @@
 package org.damx.demojpa.controllers;
 
 
+import org.apache.coyote.Response;
 import org.damx.demojpa.models.Actividad;
 import org.damx.demojpa.models.Gasto;
+import org.damx.demojpa.models.ResponseModel;
 import org.damx.demojpa.services.ActividadService;
 import org.damx.demojpa.services.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,17 @@ public class GastosController {
     private GastoService gastoService;
 
     @PostMapping("/crear")
-    public ResponseEntity<String> crearActividad(@RequestBody Gasto gasto) {
+    public ResponseEntity<ResponseModel> crearGasto(@RequestBody Gasto gasto) {
+        ResponseModel response = new ResponseModel();
         if(gastoService.crearGasto(gasto)){
-            return ResponseEntity.ok("Gasto creado correctamente");
+            response.setMessage("Gasto creado correctamente");
+            response.setSuccess(0);
+            response.setData(null);
+            return ResponseEntity.ok(response);
         }
-        return ResponseEntity.ok("Completa todos los campos");
+        response.setMessage("Error al crear gasto");
+        response.setSuccess(1);
+        response.setData(null);
+        return ResponseEntity.ok(response);
     }
 }
