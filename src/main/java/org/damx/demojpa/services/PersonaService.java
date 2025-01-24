@@ -64,4 +64,8 @@ public class PersonaService {
         return personaRepository.findByFechaNacimientoBetween(fecha1, fecha2);
     }
 
+    public Optional<List<Persona>> findPersonas(){
+        return personaRepository.findAllBy();
+    }
+
 }

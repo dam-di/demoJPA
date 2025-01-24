@@ -69,5 +69,26 @@ public class PersonaController {
         return ResponseEntity.ok(personaService.findByEntreFechaNacimiento(fecha1, fecha2));
     }
 
+    @GetMapping("/todos")
+    public ResponseEntity<ResponseModel> obtenerPersonas() {
+        ResponseModel response = new ResponseModel();
+
+        Optional<List<Persona>> listaPersonasOptional =
+                personaService.findPersonas();
+
+        if(listaPersonasOptional.isPresent()) {
+            response.setSuccess(0);
+            response.setMessage("Personas encontradas");
+            response.setData(listaPersonasOptional.get());
+            return ResponseEntity.ok(response);
+        }
+        response.setSuccess(1);
+        response.setMessage("No se encontro personas");
+        response.setData(null);
+        return ResponseEntity.ok(response);
+
+
+    }
+
 
 }

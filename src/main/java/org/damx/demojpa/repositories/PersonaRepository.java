@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
     Persona findByNombre(String nombre);
     Persona findByCorreo(String email);
     List<Persona> findByNombreContainingIgnoreCase(String nombre);
     List<Persona> findByFechaNacimientoBetween(LocalDate fecha1, LocalDate fecha2);
+    Optional<List<Persona>> findAllBy();
 }
