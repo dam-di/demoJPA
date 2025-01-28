@@ -37,11 +37,18 @@ public class PersonaController {
     public ResponseEntity<ResponseModel> crearPersona(@RequestBody Persona persona) {
         ResponseModel response = new ResponseModel();
         try {
-            Optional<Persona> p = personaService.save(persona);
-            if(p.isPresent()) {
+            Optional<Persona> personaOptinal = personaService.save(persona); // Al no tener id, se crea la persona
+            if(personaOptinal.isPresent()) {
+                Persona personaCreada = personaOptinal.get();
+                int idPersona = personaCreada.getId();
+                String extension = personaCreada.getAvatarurl();
+                String avatarurl = idPersona + extension;
+                personaCreada.setAvatarurl("http://localhost:8081/dropbox/download/"+avatarurl);
+                personaService.save(personaCreada); // Al tener persona una id actualiza a la persona
+
                 response.setSuccess(0);
                 response.setMessage("Persona creada con exito");
-                response.setData(persona.getId());
+                response.setData(idPersona);
                 return ResponseEntity.ok(response);
             }
         }catch (Exception e) {

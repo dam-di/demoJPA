@@ -24,6 +24,9 @@ public class Persona {
     @Column(name = "email", length = 100, unique = true)
     private String correo;
 
+    @Column(name = "avatarurl")
+    private String avatarurl;
+
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Pasaporte pasaporte;
 
@@ -33,8 +36,13 @@ public class Persona {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     private List<Actividad> actividades = new ArrayList<>();
 
+    public String getAvatarurl() {
+        return avatarurl;
+    }
 
-
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl;
+    }
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     private List<Gasto> gastos = new ArrayList<>();
