@@ -1,6 +1,7 @@
 package org.damx.demojpa.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -33,16 +34,10 @@ public class Persona {
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
     private Telefono telefono;
 
+
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     private List<Actividad> actividades = new ArrayList<>();
 
-    public String getAvatarurl() {
-        return avatarurl;
-    }
-
-    public void setAvatarurl(String avatarurl) {
-        this.avatarurl = avatarurl;
-    }
 
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     private List<Gasto> gastos = new ArrayList<>();
@@ -55,6 +50,13 @@ public class Persona {
         this.gastos = gastos;
     }
 
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl;
+    }
 
 
 
